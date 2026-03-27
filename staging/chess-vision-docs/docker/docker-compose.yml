@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # Documentation development server
+  docs-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: chess-vision-docs:dev
+    container_name: chess-vision-docs-dev
+    volumes:
+      - ../:/workspace/docs
+      - docs-site:/workspace/docs/site
+    working_dir: /workspace/docs
+    stdin_open: true
+    tty: true
+    ports:
+      - "8000:8000"
+    command: mkdocs serve --dev-addr=0.0.0.0:8000
+
+volumes:
+  docs-site:

@@ -1,0 +1,27 @@
+# Documentation Development Container
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    curl \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install documentation tools
+RUN pip install --no-cache-dir \
+    mkdocs \
+    mkdocs-material \
+    pymdown-extensions \
+    mkdocs-mermaid2-plugin \
+    plantuml-markdown
+
+WORKDIR /workspace/docs
+
+# Create non-root user
+RUN useradd -m -s /bin/bash -u 1000 developer \
+    && chown -R developer:developer /workspace
+USER developer
+
+EXPOSE 8000
+
+CMD ["mkdocs", "serve", "--dev-addr=0.0.0.0:8000"]

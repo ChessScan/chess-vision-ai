@@ -4,9 +4,19 @@
 
 **Org:** `ChessScan`  
 **Repos:**
-- `chess-vision-ai` - Model training \u0026 CV dev (this repo)
+- `chess-vision-ai` - Model training & CV dev (this repo)
 - `chess-vision-app` - Mobile app
-- `chess-vision-docs` - Documentation \u0026 planning
+- `chess-vision-docs` - Documentation & planning
+
+### Dev Containers
+
+| Repo | Container | Purpose | Image |
+|------|-----------|---------|-------|
+| chess-vision-ai | cv-dev | Python/OpenCV/TF/Jupyter | `chess-vision:dev` |
+| chess-vision-ai | blender-synth | Blender 4.0 synthetic data | `chess-vision:blender` |
+| chess-vision-ai | training | PyTorch/CUDA training | `chess-vision:training` |
+| chess-vision-app | app-dev | React Native/Expo | `chess-vision-app:dev` |
+| chess-vision-docs | docs-dev | MkDocs Material | `chess-vision-docs:dev` |
 
 ---
 
