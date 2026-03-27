@@ -1,0 +1,12 @@
+newmtl board_top
+  Kd 0.8 0.8 0.8
+  Ks 0.2 0.2 0.2
+  # Use texture: map_Kd mahogany_diffuse.png
+
+newmtl board_bottom
+  Kd 0.250 0.120 0.080
+  Ks 0.1 0.1 0.1
+
+newmtl board_sides
+  Kd 0.250 0.120 0.080
+  Ks 0.1 0.1 0.1

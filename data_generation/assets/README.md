@@ -1,271 +1,87 @@
 # Chess Vision Assets
 
-Free 3D chess assets for synthetic data generation.
+Complete asset library for synthetic chess training data generation.
 
-## Directory Structure
+## Contents
 
-```
-assets/
-├── pieces/              # Chess piece 3D models
-│   ├── tournament_plastic/    # Staunton plastic style
-│   ├── classic_wood/          # Traditional wooden
-│   └── modern_minimal/        # Contemporary designs
-├── boards/              # Chess board models + textures
-│   ├── walnut_4k/
-│   ├── maple_green/
-│   └── mahogany/
-├── hdri/                # Environment lighting
-│   ├── office/
-│   ├── home/
-│   └── outdoors/
-└── reference/           # Documentation, previews
-```
+### ♟️ Piece Sets (4 Styles)
 
-## Asset Requirements
+| Set | Style | Description | King Height |
+|-----|-------|-------------|-------------|
+| `set_01_basic` | Simple geometric | Baseline procedural | ~9.8cm |
+| `set_02_tournament` | Plastic tournament | Wider bases, defined steps | ~8.3cm |
+| `set_03_classic` | Ornate wood | Tall, layered details | ~12.3cm |
+| `set_04_modern` | Minimalist | Clean, smooth surfaces | ~8.5cm |
 
-### Chess Pieces (Per Set)
-- [ ] White King
-- [ ] White Queen  
-- [ ] White Rook (×2)
-- [ ] White Bishop (×2)
-- [ ] White Knight (×2)
-- [ ] White Pawn (×8)
-- [ ] Black King
-- [ ] Black Queen
-- [ ] Black Rook (×2)
-- [ ] Black Bishop (×2)
-- [ ] Black Knight (×2)
-- [ ] Black Pawn (×8)
+Each set contains:
+- 6 white pieces: king, queen, rook, bishop, knight, pawn
+- 6 black pieces: king, queen, rook, bishop, knight, pawn
+- **Total: 48 OBJ files**
 
-**Formats (best to acceptable):**
-1. `.blend` (Blender native)
-2. `.fbx` (Universal, materials included)
-3. `.obj` + `.mtl` (Widely supported)
-4. `.glb`/`.gltf` (Modern web standard)
+All pieces are **consistently scaled** to tournament proportions (1 unit = 2.5cm).
 
-**Specs:**
-- Poly count: 1K-10K per piece (higher for hero pieces)
-- Scale: Normalized to fit standard board
-- Origin: Base of piece at (0,0,0)
-- Materials: PBR (metallic/roughness workflow)
+### 📋 Boards (4 Styles)
 
-### Chess Boards
-- [ ] Board mesh (square or rectangular)
-- [ ] Light square texture/albedo
-- [ ] Dark square texture/albedo
-- [ ] Normal map (wood grain)
-- [ ] Roughness map
-- [ ] Optional: Border/frame mesh
+| Board | Style | Light Square | Dark Square |
+|-------|-------|--------------|-------------|
+| `walnut_4k` | Classic dark wood | #F0DAB5 | #8B5A2B |
+| `maple_4k` | Tournament green | Cream | #769656 |
+| `mahogany_4k` | Rich red-brown | Light | Deep red |
+| `plastic_4k` | Standard tournament | Off-white | #4A7C59 |
 
-**Dimensions:**
-- Tournament standard: 56cm × 56cm outer
-- Square size: 5.7cm × 5.7cm
-- Thickness: 2-3cm
-- Border: 2cm
+**Dimensions:** 56cm × 56cm board, 5.7cm squares, 2.5cm thickness
 
-## Sourcing Guide
+### 🌅 HDRI Environments
 
-### Free Model Sites (Checked, CC Licensed)
+| Category | File | Size |
+|----------|------|------|
+| Office | `office/kloetzle_blei_4k.hdr` | 21.3 MB |
+| Studio | `studio/studio_small_09_4k.exr` | 17.7 MB |
+| Home | `home/apartment_4k.exr` | 17.8 MB |
+| Outdoor | `outdoor/indoor_pool_4k.exr` | 16.6 MB |
 
-#### 1. **Sketchfab** (https://sketchfab.com)
-Search: "chess set", "staunton chess", "tournament chess"
-Filters: Downloadable + CC licenses
+### 🛠️ Generation Scripts
 
-**Recommended models to check:**
-- "Wood Chess Set" by [various artists]
-- "Chess Pieces" by [scanned collections]
-- "Staunton Chess Set" (look for OBJ/FBX)
+- `generate_all_piece_sets.py` - Create 4 piece set variations
+- `generate_all_boards.py` - Create 4 board variations with MTL files
+- `validate_all_assets.py` - Check all assets for completeness
+- `check_assets.sh` - Quick inventory script
+- `download_remaining_assets.sh` - Download additional textures
 
-**License:** CC Attribution (give credit in dataset docs)
+## Scale Reference
 
-#### 2. **BlendSwap** (https://blendswap.com)
-Search: "chess"
-Requires free account
+All assets use consistent tournament-standard scaling:
 
-**Advantages:**
-- Native .blend files
-- Blender materials ready
-- Community rated
+- **1 unit in OBJ** = 2.5cm (for pieces, applied by generator)
+- **Board dimensions** = 56cm × 56cm (imported as meters)
+- **Square size** = 5.7cm
+- **Piece heights** = Proportional to Staunton standard
 
-#### 3. **CGTrader** (https://cgtrader.com)
-Search: "chess"
-Filter: Free
+## Usage
 
-**Look for:**
-- Low poly game-ready sets
-- PBR textured collections
-- Complete sets (not single pieces)
+```python
+# In Blender or other tool:
+import bpy
 
-#### 4. **Free3D** (https://free3d.com)
-Search: "chess pieces"
-Filter: Free + OBJ/FBX format
+# Import piece
+bpy.ops.import_scene.obj(filepath="pieces/set_01_basic/white/king.obj")
 
-#### 5. **Turbosquid** (https://turbosquid.com)
-Search: "chess"
-Filter: Free
+# Import board
+bpy.ops.import_scene.obj(filepath="boards/walnut_4k/board.obj")
 
-Often lower quality but usable for variety.
-
-### Specific Known Free Assets
-
-#### Complete Sets (Download Immediately)
-
-**A. Staunton Tournament Set**
-- Source: Sketchfab "Wooden Chess Set"
-- Artist: Varies (search latest)
-- License: CC Attribution
-- Format: Usually GLB/OBJ
-- Note: Download all 6 piece types
-
-**B. Basic Plastic Set**
-- Source: Free3D or CGTrader
-- Search: "plastic chess pieces"
-- Style: Tournament regulation
-- Color: White/Black or Natural wood
-
-**C. Classic Wood Set**
-- Source: BlendSwap
-- Search: "chess set"
-- Look for: Detailed wood materials
-
-#### Boards & Textures
-
-**Wood Textures (CC0):**
-- https://ambientcg.com (search "wood", "floor")
-- https://polyhaven.com/textures (formerly HDRI Haven)
-- https://cc0textures.com
-
-**Seamless wood textures needed:**
-- [ ] Light oak/maple (for light squares)
-- [ ] Dark walnut (for dark squares)
-- [ ] Mahogany reddish tone
-- [ ] Tournament green (plastic)
-
-**HDRI Environments (CC0):**
-- https://polyhaven.com/hdris
-- Categories: indoor, studio, office
-
-Download ~5 different:
-- Office with windows
-- Tournament hall
-- Home warm lighting
-- Studio neutral
-- Outdoor/indoor mix
-
-### Asset Selection Criteria
-
-**Priority 1: Tournament Standard (Must Have)**
-- [ ] Staunton design pieces, plastic or wood
-- [ ] Standard tournament board (green/buff or wood)
-- [ ] Clean, recognizable silhouettes
-
-**Priority 2: Classic Wood (High Value)**
-- [ ] Detailed wood grain
-- [ ] Traditional turned design
-- [ ] Warm color tones
-
-**Priority 3: Variety/Distinct (Medium Value)**
-- [ ] Modern minimalist designs
-- [ ] 3D printed aesthetic
-- [ ] Different proportions
-
-**Avoid:**
-- Fantasy themed (dragons, etc.)
-- Non-standard proportions
-- Excessively ornate
-- Copyrighted designs (e.g., LEGO)
-
-## Download Checklist
-
-### Immediate Actions
-- [ ] Download 2-3 complete piece sets from Sketchfab
-- [ ] Get 3+ wood texture sets from Polyhaven
-- [ ] Download 5 HDRI environments
-- [ ] Save all license attribution info
-
-### File Organization
-```
-pieces/
-  set_01_staunton/
-    README.txt (license info)
-    white_king.fbx
-    white_queen.fbx
-    ...
-    black_pawn.fbx
-    preview.png
-  set_02_classic/
-    ...
-  set_03_modern/
-    ...
-
-boards/
-  board_01_walnut/
-    board.obj
-    light_square_albedo.png
-    dark_square_albedo.png
-    normal.png
-    roughness.png
-    README.txt
-  board_02_maple/
-    ...
-
-hdri/
-  office_morning_4k.hdr
-  tournament_hall_4k.hdr
-  home_evening_4k.hdr
-  studio_neutral_4k.hdr
-  outdoor_cloudy_4k.hdr
+# Set up HDRI environment
+bpy.context.scene.world.use_nodes = True
+# Load HDRI from hdri/office/kloetzle_blei_4k.hdr
 ```
 
-## License Tracking
+## License
 
-Create `LICENSES.md` with:
-```markdown
-# Asset Licenses
+See `LICENSES.md` for full attribution.
 
-## Set 1: Staunton Tournament
-- Source: Sketchfab
-- Model: "[Exact Name]"
-- Author: [Name]
-- License: CC BY 4.0
-- URL: [Direct link]
-- Downloaded: [Date]
-- Modifications: None / Scaled to cm
+All downloaded assets ([Polyhaven](https://polyhaven.com)) are **CC0 (Public Domain)**.
 
-## Textures
-- Source: Polyhaven
-- License: CC0
-- ...
-```
-**Critical:** Track licenses for dataset documentation and legal compliance.
+Generated procedural assets are MIT licensed.
 
-## Quick Start Commands
+## Total Size
 
-Since web search is limited, here's what to do:
-
-1. **Open browser, go to:**
-   - https://sketchfab.com/search?q=chess+set&type=models downloadable=true
-   - https://polyhaven.com/hdris (download 5 indoor)
-   - https://polyhaven.com/textures (download wood)
-
-2. **Download criteria:**
-   - OBJ, FBX, or GLB format
-   - CC license (not NC if commercial use planned)
-   - Complete sets preferred
-
-3. **Organize into folders above**
-
-4. **Test in Blender:**
-   - Import → Check scale
-   - Verify materials
-   - Render test image
-
-## Next Steps After Download
-
-1. Import all pieces into Blender
-2. Normalize scales (kings ~9cm tall)
-3. Create material variants
-4. Export as `.blend` collection
-5. Test render one complete position
-
-See `../IMPLEMENTATION.md` for technical import/scaling process.
+~285MB (includes all piece sets, boards, textures, and HDRIs)
