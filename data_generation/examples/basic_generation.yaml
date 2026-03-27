@@ -1,0 +1,112 @@
+# Basic Chess Vision Dataset Config
+# Generates 100 training images for testing pipeline
+
+name: "chess_vision_basic_test"
+description: "Small test dataset for pipeline validation"
+version: "0.1.0"
+
+generation:
+  total_images: 100
+  random_seed: 42
+  distribution:
+    train: 1.0      # All training for basic test
+    val: 0.0
+    test: 0.0
+
+board_positions:
+  source: "curated"
+  collection: "test_set_10"
+  count: 10
+  categories:
+    opening: 2      # Classic openings
+    middlegame: 3   # Complex positions
+    endgame: 2      # King + piece endings
+    tactical: 2     # Pins, forks visible
+    random_legal: 1 # Edge cases
+  constraints:
+    min_pieces: 5
+    max_pieces: 32
+    enforce_kings: true
+
+camera:
+  angle_range: [35, 55]           # Narrower range for testing
+  angle_samples: 2                # 35°, 55°
+  rotation_range: [0, 270]
+  rotation_samples: 4             # 0°, 90°, 180°, 270°
+  distance_range: [30, 40]        # cm
+  distance_samples: 2             # 30cm, 40cm
+  focal_length: 26                # iPhone equivalent
+  lens_distortion: 0.01
+  depth_of_field:
+    enabled: true
+    f_stop_range: [3.5, 5.6]
+
+lighting:
+  environments:
+    - name: "neutral_studio"
+      hdri: "assets/hdri/studio_01.hdr"
+      intensity_range: [0.9, 1.1]
+      weight: 0.6                   # 60% of renders
+    - name: "warm_office"
+      hdri: "assets/hdri/office_02.hdr"
+      intensity_range: [0.8, 1.0]
+      color_temp_range: [4500, 5000]
+      weight: 0.4                   # 40% of renders
+
+materials:
+  board_variants:
+    - name: "walnut_standard"
+      path: "assets/boards/walnut_01/"
+      weight: 0.7
+    - name: "maple_light"
+      path: "assets/boards/maple_01/"
+      weight: 0.3
+  piece_variants:
+    - name: "tournament_plastic"
+      path: "assets/pieces/tournament_01/"
+      weight: 1.0
+  wear_level_range: [0.0, 0.15]     # Light wear
+
+augmentation:
+  post_render:
+    sensor_noise:
+      enabled: true
+      probability: 0.5
+      intensity_range: [0.015, 0.035]
+    jpeg_artifacts:
+      enabled: true
+      probability: 0.3
+      quality_range: [75, 90]
+    color_jitter:
+      hue_range: [-0.1, 0.1]
+      saturation_range: [-0.05, 0.05]
+      brightness_range: [-0.08, 0.08]
+      probability: 0.4
+
+constraints:
+  occlusion:
+    max_overlap: 0.25               # 25% max bbox overlap
+    ensure_variety: true
+    occlusion_probability: 0.15     # 15% of renders have occlusion
+  board_rotation:
+    allow_180: true
+    probability: 0.2              # 20% rotated (white on left)
+  piece_visibility:
+    min_partial: 0.65             # At least 65% visible
+
+output:
+  resolution: [640, 640]
+  format: "coco"                  # COCO JSON format
+  include_metadata: true
+  quality:
+    samples: 64                     # Fast rendering (increase to 128+ for production)
+    denoise: true
+
+paths:
+  assets: "./assets/"
+  temp: "./temp/"
+  checkpoint: "./checkpoints/"
+
+logging:
+  level: "INFO"
+  progress_interval: 10             # Log every 10 images
