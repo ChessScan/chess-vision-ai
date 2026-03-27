@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  cv-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: chess-vision:dev
+    container_name: chess-vision-dev
+    volumes:
+      - ../:/workspace/chess-vision
+      - cv-cache:/home/developer/.cache
+    working_dir: /workspace/chess-vision
+    stdin_open: true
+    tty: true
+    ports:
+      - "8888:8888"
+    environment:
+      - PYTHONPATH=/workspace/chess-vision
+      - JUPYTER_ENABLE_LAB=yes
+    command: bash
+
+volumes:
+  cv-cache:

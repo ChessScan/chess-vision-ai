@@ -1,0 +1,23 @@
+# Chess Vision Dev Container
+# Multi-stage build for CV/ML development
+
+FROM python:3.11-slim-bookworm AS base
+
+# System dependencies for OpenCV, image processing
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libglib2.0-0 libsm6 libxext6 libxrender-dev libgomp1 \
+    libgtk-3-0 build-essential git curl wget \
+    libturbojpeg0 libpng-dev libjpeg-dev libwebp-dev libtiff5-dev \
+    vim htop tree \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+RUN useradd -m -s /bin/bash -u 1000 developer && \
+    chown -R developer:developer /workspace
+USER developer
+
+CMD ["bash"]
