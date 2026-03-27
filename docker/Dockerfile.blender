@@ -1,0 +1,40 @@
+# Blender Synthetic Data Generation Container
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    curl \
+    python3 \
+    python3-pip \
+    python3-venv \
+    libgl1-mesa-glx \
+    libxi6 \
+    libxrender1 \
+    libxfixes3 \
+    libxxf86vm1 \
+    libxkbfile1 \
+    libglu1-mesa \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Blender 4.0
+RUN wget -q https://download.blender.org/release/Blender4.0/blender-4.0.2-linux-x64.tar.xz \
+    && tar -xf blender-4.0.2-linux-x64.tar.xz -C /opt \
+    && rm blender-4.0.2-linux-x64.tar.xz \
+    && ln -s /opt/blender-4.0.2-linux-x64/blender /usr/local/bin/blender
+
+# Python dependencies for Blender scripts
+COPY requirements-blender.txt /tmp/
+RUN pip3 install --no-cache-dir -r /tmp/requirements-blender.txt
+
+WORKDIR /workspace/synthetic_data
+
+# Create non-root user
+RUN useradd -m -s /bin/bash -u 1000 developer \
+    && chown -R developer:developer /workspace
+USER developer
+
+CMD ["blender", "--python-console"]

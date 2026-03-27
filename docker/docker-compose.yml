@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # General CV/ML development container
   cv-dev:
     build:
       context: .
@@ -20,5 +21,51 @@ services:
       - JUPYTER_ENABLE_LAB=yes
     command: bash
 
+  # Blender synthetic data generation
+  blender-synth:
+    build:
+      context: .
+      dockerfile: Dockerfile.blender
+    image: chess-vision:blender
+    container_name: chess-vision-blender
+    volumes:
+      - ../synthetic_data:/workspace/synthetic_data
+      - ../data:/workspace/data
+    working_dir: /workspace/synthetic_data
+    stdin_open: true
+    tty: true
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+    command: bash
+
+  # Model training with GPU support
+  training:
+    build:
+      context: .
+      dockerfile: Dockerfile.training
+    image: chess-vision:training
+    container_name: chess-vision-training
+    volumes:
+      - ../:/workspace/chess-vision
+      - training-cache:/home/developer/.cache
+    working_dir: /workspace/chess-vision
+    stdin_open: true
+    tty: true
+    ports:
+      - "8889:8888"
+      - "6006:6006"  # TensorBoard
+    environment:
+      - PYTHONPATH=/workspace/chess-vision
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: bash
+
 volumes:
   cv-cache:
+  training-cache:

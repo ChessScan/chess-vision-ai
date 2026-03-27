@@ -1,0 +1,29 @@
+# Training Container with CUDA support
+FROM nvidia/cuda:12.1-devel-ubuntu22.04 AS base
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# System deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 \
+    python3-pip \
+    python3-venv \
+    git \
+    vim \
+    htop \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+
+# Training-specific dependencies
+COPY requirements-training.txt .
+RUN pip3 install --no-cache-dir -r requirements-training.txt
+
+# Create non-root user
+RUN useradd -m -s /bin/bash -u 1000 developer \
+    && chown -R developer:developer /workspace
+USER developer
+
+CMD ["python3"]
