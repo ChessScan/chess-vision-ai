@@ -1,5 +1,9 @@
 # TOOLS.md - Local Notes
 
+**🔐 Credentials:** See [CREDENTIALS.md](./CREDENTIALS.md) for all API keys, tokens, and secrets.
+
+---
+
 ### GitHub Organization
 
 **Org:** `ChessScan`  
@@ -10,13 +14,19 @@
 
 ### Dev Containers
 
-| Repo | Container | Purpose | Image |
-|------|-----------|---------|-------|
-| chess-vision-ai | cv-dev | Python/OpenCV/TF/Jupyter | `chess-vision:dev` |
-| chess-vision-ai | blender-synth | Blender 4.0 synthetic data | `chess-vision:blender` |
-| chess-vision-ai | training | PyTorch/CUDA training | `chess-vision:training` |
-| chess-vision-app | app-dev | React Native/Expo | `chess-vision-app:dev` |
-| chess-vision-docs | docs-dev | MkDocs Material | `chess-vision-docs:dev` |
+| Repo | Container | Purpose | Image | Status |
+|------|-----------|---------|-------|--------|
+| chess-vision-ai | cv-dev | Python/OpenCV/TF/Jupyter | `chess-vision:dev` | ✅ |
+| chess-vision-ai | blender-synth | Blender 4.0 synthetic data | `chess-vision/blender-synth:latest` | ✅ **ON DEV MACHINE** |
+| chess-vision-ai | training | PyTorch/CUDA training | `chess-vision:training` | ✅ |
+| chess-vision-app | app-dev | React Native/Expo | `chess-vision-app:dev` | ✅ **RUNNING** |
+| chess-vision-docs | docs-dev | MkDocs Material | `chess-vision-docs:dev` | ⏳ staged |
+
+### Dev Machine
+**Host:** `jan@100.120.200.17`  
+**Docker:** `tcp://127.0.0.1:2375` (Podman 4.9.3)  
+**Specs:** Ryzen 9 5900XT @ 32 threads, 62GB RAM  
+**Data:** `/home/jan/Desktop/chess/` (116,771 renders from alpha prototype)
 
 ---
 
