@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
+import '../models/chess_piece.dart';
 import '../models/chess_position.dart';
 import '../services/camera_service.dart';
 import '../services/storage_service.dart';
@@ -201,10 +202,10 @@ class _RecordingScreenState extends State<RecordingScreen> with WidgetsBindingOb
 
   Widget _buildBody() {
     if (_isInitializing) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const [
             CircularProgressIndicator(),
             SizedBox(height: 16),
             Text('Initializing camera...'),

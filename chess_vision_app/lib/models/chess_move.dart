@@ -1,3 +1,4 @@
+import 'chess_piece.dart';
 import 'chess_position.dart';
 
 class ChessMove {

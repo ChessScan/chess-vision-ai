@@ -1,64 +1,4 @@
-import 'chess_move.dart';
-
-enum PieceType { king, queen, rook, bishop, knight, pawn, none }
-
-enum PieceColor { white, black, none }
-
-class ChessPiece {
-  final PieceType type;
-  final PieceColor color;
-
-  const ChessPiece({required this.type, required this.color});
-
-  const ChessPiece.none() : type = PieceType.none, color = PieceColor.none;
-
-  bool get isNone => type == PieceType.none;
-
-  String get notation {
-    if (isNone) return '';
-    final typeChar = switch (type) {
-      PieceType.king => 'K',
-      PieceType.queen => 'Q',
-      PieceType.rook => 'R',
-      PieceType.bishop => 'B',
-      PieceType.knight => 'N',
-      PieceType.pawn => '',
-      PieceType.none => '',
-    };
-    return typeChar;
-  }
-
-  String get unicodeSymbol {
-    if (color == PieceColor.white) {
-      return switch (type) {
-        PieceType.king => '♔',
-        PieceType.queen => '♕',
-        PieceType.rook => '♖',
-        PieceType.bishop => '♗',
-        PieceType.knight => '♘',
-        PieceType.pawn => '♙',
-        PieceType.none => '',
-      };
-    } else {
-      return switch (type) {
-        PieceType.king => '♚',
-        PieceType.queen => '♛',
-        PieceType.rook => '♜',
-        PieceType.bishop => '♝',
-        PieceType.knight => '♞',
-        PieceType.pawn => '♟',
-        PieceType.none => '',
-      };
-    }
-  }
-
-  ChessPiece copyWith({PieceType? type, PieceColor? color}) {
-    return ChessPiece(
-      type: type ?? this.type,
-      color: color ?? this.color,
-    );
-  }
-}
+import 'chess_piece.dart';
 
 class ChessPosition {
   final List<List<ChessPiece>> board;
@@ -96,15 +36,29 @@ class ChessPosition {
           col += int.parse(char);
         } else {
           final color = char == char.toUpperCase() ? PieceColor.white : PieceColor.black;
-          final type = switch (char.toLowerCase()) {
-            'k' => PieceType.king,
-            'q' => PieceType.queen,
-            'r' => PieceType.rook,
-            'b' => PieceType.bishop,
-            'n' => PieceType.knight,
-            'p' => PieceType.pawn,
-            _ => PieceType.none,
-          };
+          PieceType type;
+          switch (char.toLowerCase()) {
+            case 'k':
+              type = PieceType.king;
+              break;
+            case 'q':
+              type = PieceType.queen;
+              break;
+            case 'r':
+              type = PieceType.rook;
+              break;
+            case 'b':
+              type = PieceType.bishop;
+              break;
+            case 'n':
+              type = PieceType.knight;
+              break;
+            case 'p':
+              type = PieceType.pawn;
+              break;
+            default:
+              type = PieceType.none;
+          }
           board[row][col] = ChessPiece(type: type, color: color);
           col++;
         }
@@ -119,7 +73,6 @@ class ChessPosition {
 
   static List<List<ChessPiece>> _createInitialBoard() {
     return [
-      // Black back rank
       [
         const ChessPiece(type: PieceType.rook, color: PieceColor.black),
         const ChessPiece(type: PieceType.knight, color: PieceColor.black),
@@ -130,16 +83,12 @@ class ChessPosition {
         const ChessPiece(type: PieceType.knight, color: PieceColor.black),
         const ChessPiece(type: PieceType.rook, color: PieceColor.black),
       ],
-      // Black pawns
       List.generate(8, (_) => const ChessPiece(type: PieceType.pawn, color: PieceColor.black)),
-      // Empty rows
       List.generate(8, (_) => const ChessPiece.none()),
       List.generate(8, (_) => const ChessPiece.none()),
       List.generate(8, (_) => const ChessPiece.none()),
       List.generate(8, (_) => const ChessPiece.none()),
-      // White pawns
       List.generate(8, (_) => const ChessPiece(type: PieceType.pawn, color: PieceColor.white)),
-      // White back rank
       [
         const ChessPiece(type: PieceType.rook, color: PieceColor.white),
         const ChessPiece(type: PieceType.knight, color: PieceColor.white),
@@ -173,19 +122,33 @@ class ChessPosition {
             buffer.write(emptyCount);
             emptyCount = 0;
           }
-          String char = switch (piece.type) {
-            PieceType.king => 'k',
-            PieceType.queen => 'q',
-            PieceType.rook => 'r',
-            PieceType.bishop => 'b',
-            PieceType.knight => 'n',
-            PieceType.pawn => 'p',
-            PieceType.none => '',
-          };
-          if (piece.color == PieceColor.white) {
-            char = char.toUpperCase();
+          String typeChar;
+          switch (piece.type) {
+            case PieceType.king:
+              typeChar = 'k';
+              break;
+            case PieceType.queen:
+              typeChar = 'q';
+              break;
+            case PieceType.rook:
+              typeChar = 'r';
+              break;
+            case PieceType.bishop:
+              typeChar = 'b';
+              break;
+            case PieceType.knight:
+              typeChar = 'n';
+              break;
+            case PieceType.pawn:
+              typeChar = 'p';
+              break;
+            case PieceType.none:
+              typeChar = '';
           }
-          buffer.write(char);
+          if (piece.color == PieceColor.white) {
+            typeChar = typeChar.toUpperCase();
+          }
+          buffer.write(typeChar);
         }
       }
       if (emptyCount > 0) {

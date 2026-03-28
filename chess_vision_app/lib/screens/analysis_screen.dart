@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:provider/provider.dart';
 
+import '../models/chess_piece.dart';
 import '../models/chess_position.dart';
 import '../models/recording.dart';
 import '../services/storage_service.dart';

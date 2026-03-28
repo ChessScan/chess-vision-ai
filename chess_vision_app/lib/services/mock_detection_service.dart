@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import '../models/chess_piece.dart';
 import '../models/chess_position.dart';
 import '../models/chess_move.dart';
 
