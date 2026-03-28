@@ -1,0 +1,32 @@
+camera_angles:
+  top_down:
+    name: "Top Down (90°)"
+    location: [0, 0, 6]
+    rotation: [0, 0, 0]
+    description: "Standard overhead view, full board visibility"
+    
+  medium:
+    name: "Medium (45-60°)"
+    location: [2, -2, 4]
+    rotation: [0.7, 0, 0.8]
+    description: "Tournament-style viewing angle"
+    
+  low:
+    name: "Low (20-30°)"
+    location: [3, -3, 2]
+    rotation: [1.1, 0, 0.9]
+    description: "Dramatic perspective shot"
+    
+  shallow:
+    name: "Shallow (10-20°)"
+    location: [3.5, -3.5, 1]
+    rotation: [1.4, 0, 0.8]
+    description: "Challenging low angle for model robustness"
+    
+  random:
+    name: "Random"
+    description: "Randomly generated within ranges"
+    height_min: 1.5
+    height_max: 6.0
+    angle_min: 10
+    angle_max: 90

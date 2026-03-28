@@ -1,0 +1,12 @@
+{
+  "agent": "codex-data",
+  "status": "running",
+  "progress": 0,
+  "lastOutput": "Spawned session 019d3509-6eef-71e0-b7ea-6b54adb5c228",
+  "lastUpdate": "2026-03-28T16:15:00Z",
+  "blockers": [],
+  "nextCheckpoint": "First 10 images generated (ETA: 30 min)",
+  "task": "Generate 1000 synthetic training images",
+  "specPath": "/workspace/shared/spec/data_agent_spec.md",
+  "sessionId": "019d3509-6eef-71e0-b7ea-6b54adb5c228"
+}

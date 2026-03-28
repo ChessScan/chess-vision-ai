@@ -11,13 +11,18 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-venv \
     libgl1-mesa-glx \
+    libgl1-mesa-dri \
     libxi6 \
     libxrender1 \
     libxfixes3 \
     libxxf86vm1 \
     libxkbfile1 \
+    libxkbcommon0 \
+    libxkbcommon-x11-0 \
     libglu1-mesa \
     libgomp1 \
+    libsm6 \
+    libice6 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Blender 4.0
@@ -30,11 +35,18 @@ RUN wget -q https://download.blender.org/release/Blender4.0/blender-4.0.2-linux-
 COPY requirements-blender.txt /tmp/
 RUN pip3 install --no-cache-dir -r /tmp/requirements-blender.txt
 
-WORKDIR /workspace/synthetic_data
+WORKDIR /workspace
+
+# Copy scripts and config
+COPY src/ /workspace/src/
+COPY scripts/ /workspace/scripts/
+COPY config/ /workspace/config/
+COPY entrypoint.sh /workspace/
+RUN chmod +x /workspace/entrypoint.sh
 
 # Create non-root user
 RUN useradd -m -s /bin/bash -u 1000 developer \
     && chown -R developer:developer /workspace
 USER developer
 
-CMD ["blender", "--python-console"]
+CMD ["/workspace/entrypoint.sh"]

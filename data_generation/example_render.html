@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chess Vision Dataset Example</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #4ade80;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+        
+        .image-container {
+            position: relative;
+            display: inline-block;
+            border: 2px solid #4ade80;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        
+        .board {
+            width: 640px;
+            height: 640px;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            background: #2c1810;
+            padding: 20px;
+        }
+        
+        .square {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        
+        .light { background: #f0d9b5; }
+        .dark { background: #b58863; }
+        
+        .piece {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+        
+        .white { color: #fff; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5)); }
+        .black { color: #000; filter: drop-shadow(1px 1px 1px rgba(255,255,255,0.3)); }
+        
+        .bbox {
+            position: absolute;
+            border: 3px solid #4ade80;
+            border-radius: 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .bbox-label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            background: #4ade80;
+            color: #000;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-weight: bold;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+        
+        .coords {
+            position: absolute;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .info-panel {
+            margin-top: 20px;
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .info-block h3 {
+            margin-top: 0;
+            color: #4ade80;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        
+        .info-block ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 13px;
+            color: #94a3b8;
+        }
+        
+        .info-block li {
+            margin: 5px 0;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .info-block li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+        }
+        
+        .annotation-table {
+            grid-column: 1 / -1;
+            margin-top: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        th {
+            background: #4ade80;
+            color: #000;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #4ade80;
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>♟️ Chess Vision Dataset Example</h1>
+        <p class="subtitle">Synthetic training data with COCO annotations</p>
+        
+        <div class="image-container">
+            <div class="board" id="board"></div>
+        </div>
+        
+        <div class="badge">Training Sample #0001</div>
+        
+        <div class="info-panel">
+            <div class="info-block">
+                <h3>Camera Parameters</h3>
+                <ul>
+                    <li>Angle: 45° from horizontal</li>
+                    <li>Rotation: 120° around center</li>
+                    <li>Distance: 35cm from board</li>
+                    <li>Focal Length: 26mm</li>
+                    <li>Resolution: 640×640</li>
+                </ul>
+            </div>
+            
+            <div class="info-block">
+                <h3>Scene Configuration</h3>
+                <ul>
+                    <li>Board: Walnut 56cm×56cm</li>
+                    <li>Pieces: Tournament Staunton</li>
+                    <li>Lighting: Studio Neutral HDRI</li>
+                    <li>Position: Starting position (rnbqkbnr...)</li>
+                </ul>
+            </div>
+            
+            <div class="annotation-table">
+                <h3>Ground Truth Annotations (COCO Format)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Class</th>
+                            <th>Square</th>
+                            <th>BBox (x, y, w, h)</th>
+                            <th>Area (px²)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>white_king</td>
+                            <td>e1</td>
+                            <td>[305.2, 585.3, 48.5, 52.1]</td>
+                            <td>2,528</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>white_queen</td>
+                            <td>d1</td>
+                            <td>[268.1, 585.3, 48.5, 52.1]</td>
+                            <td>2,528</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>black_king</td>
+                            <td>e8</td>
+                            <td>[308.4, 45.2, 47.8, 50.9]</td>
+                            <td>2,433</td>
+                        </tr>
+                        <tr>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                            <td>...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Chess pieces Unicode
+        const pieces = {
+            white: { K: '♔', Q: '♕', R: '♖', B: '♗', N: '♘', P: '♙' },
+            black: { K: '♚', Q: '♛', R: '♜', B: '♝', N: '♞', P: '♟' }
+        };
+        
+        // Starting position FEN
+        const position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+        
+        // Sample annotations (just a few for demo)
+        const annotations = [
+            { row: 7, col: 4, class: 'white_king', color: 'white' },
+            { row: 7, col: 3, class: 'white_queen', color: 'white' },
+            { row: 0, col: 4, class: 'black_king', color: 'black' },
+            { row: 0, col: 3, class: 'black_queen', color: 'black' },
+        ];
+        
+        // Generate board
+        const board = document.getElementById('board');
+        
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                const square = document.createElement('div');
+                square.className = `square ${(row + col) % 2 === 0 ? 'light' : 'dark'}`;
+                
+                // Place piece if present
+                const piece = getPieceAt(row, col);
+                if (piece) {
+                    const pieceSpan = document.createElement('span');
+                    pieceSpan.className = `piece ${piece.color}`;
+                    pieceSpan.textContent = piece.char;
+                    square.appendChild(pieceSpan);
+                }
+                
+                // Add annotation box if annotated
+                const ann = annotations.find(a => a.row === row && a.col === col);
+                if (ann) {
+                    const bbox = document.createElement('div');
+                    bbox.className = 'bbox';
+                    bbox.style.width = '90%';
+                    bbox.style.height = '90%';
+                    bbox.style.top = '5%';
+                    bbox.style.left = '5%';
+                    
+                    const label = document.createElement('div');
+                    label.className = 'bbox-label';
+                    label.textContent = ann.class;
+                    bbox.appendChild(label);
+                    
+                    square.appendChild(bbox);
+                }
+                
+                board.appendChild(square);
+            }
+        }
+        
+        function getPieceAt(row, col) {
+            // Parse FEN to get piece at position
+            const ranks = position.split('/');
+            let file = 0;
+            for (const char of ranks[row]) {
+                if (char >= '1' && char <= '8') {
+                    file += parseInt(char);
+                } else {
+                    if (file === col) {
+                        const color = char === char.toUpperCase() ? 'white' : 'black';
+                        const pieceChar = char.toUpperCase();
+                        return { char: pieces[color][pieceChar], color };
+                    }
+                    file++;
+                }
+            }
+            return null;
+        }
+    </script>
+</body>
+</html>

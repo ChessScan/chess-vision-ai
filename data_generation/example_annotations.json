@@ -1,0 +1,184 @@
+{
+  "info": {
+    "description": "Chess Vision Dataset - Training Sample",
+    "version": "1.0",
+    "year": 2026,
+    "contributor": "Chess Vision AI",
+    "date_created": "2026-03-28"
+  },
+  "images": [
+    {
+      "id": 1,
+      "file_name": "render_000001.png",
+      "width": 640,
+      "height": 640,
+      "date_captured": "2026-03-28",
+      "extra_info": {
+        "position_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        "position_category": "opening",
+        "camera_angle": 45.2,
+        "camera_rotation": 120.5,
+        "camera_distance": 35.0,
+        "lighting_environment": "studio_neutral",
+        "board_variant": "walnut_4k",
+        "piece_variant": "set_02_tournament"
+      }
+    }
+  ],
+  "annotations": [
+    {
+      "id": 1,
+      "image_id": 1,
+      "category_id": 1,
+      "bbox": [305.2, 585.3, 48.5, 52.1],
+      "area": 2528.85,
+      "iscrowd": 0,
+      "attributes": {
+        "square": "e1",
+        "occlusion": 1.0,
+        "piece_type": "king",
+        "color": "white"
+      }
+    },
+    {
+      "id": 2,
+      "image_id": 1,
+      "category_id": 2,
+      "bbox": [268.1, 585.3, 48.5, 52.1],
+      "area": 2528.85,
+      "iscrowd": 0,
+      "attributes": {
+        "square": "d1",
+        "occlusion": 1.0,
+        "piece_type": "queen",
+        "color": "white"
+      }
+    },
+    {
+      "id": 3,
+      "image_id": 1,
+      "category_id": 3,
+      "bbox": [231.0, 585.3, 48.5, 52.1],
+      "area": 2528.85,
+      "iscrowd": 0,
+      "attributes": {
+        "square": "c1",
+        "occlusion": 1.0,
+        "piece_type": "bishop",
+        "color": "white"
+      }
+    },
+    {
+      "id": 4,
+      "image_id": 1,
+      "category_id": 4,
+      "bbox": [156.8, 585.3, 48.5, 52.1],
+      "area": 2528.85,
+      "iscrowd": 0,
+      "attributes": {
+        "square": "a1",
+        "occlusion": 1.0,
+        "piece_type": "rook",
+        "color": "white"
+      }
+    },
+    {
+      "id": 5,
+      "image_id": 1,
+      "category_id": 5,
+      "bbox": [194.9, 585.3, 48.5, 52.1],
+      "area": 2528.85,
+      "iscrowd": 0,
+      "attributes": {
+        "square": "b1",
+        "occlusion": 1.0,
+        "piece_type": "knight",
+        "color": "white"
+      }
+    },
+    {
+      "id": 6,
+      "image_id": 1,
+      "category_id": 6,
+      "bbox": [156.8, 532.2, 37.1, 37.1],
+      "area": 1376.41,
+      "iscrowd": 0,
+      "attributes": {
+        "square": "a2",
+        "occlusion": 1.0,
+        "piece_type": "pawn",
+        "color": "white"
+      }
+    },
+    {
+      "id": 7,
+      "image_id": 1,
+      "category_id": 7,
+      "bbox": [308.4, 2.4, 47.8, 50.9],
+      "area": 2433.02,
+      "iscrowd": 0,
+      "attributes": {
+        "square": "e8",
+        "occlusion": 1.0,
+        "piece_type": "king",
+        "color": "black"
+      }
+    },
+    {
+      "id": 8,
+      "image_id": 1,
+      "category_id": 8,
+      "bbox": [271.3, 2.4, 47.8, 50.9],
+      "area": 2433.02,
+      "iscrowd": 0,
+      "attributes": {
+        "square": "d8",
+        "occlusion": 1.0,
+        "piece_type": "queen",
+        "color": "black"
+      }
+    },
+    {
+      "id": 9,
+      "image_id": 1,
+      "category_id": 9,
+      "bbox": [308.4, 55.3, 37.1, 37.1],
+      "area": 1376.41,
+      "iscrowd": 0,
+      "attributes": {
+        "square": "e7",
+        "occlusion": 1.0,
+        "piece_type": "pawn",
+        "color": "black"
+      }
+    },
+    {
+      "id": 10,
+      "image_id": 1,
+      "category_id": 10,
+      "bbox": [160.2, 2.4, 47.3, 50.4],
+      "area": 2383.92,
+      "iscrowd": 0,
+      "attributes": {
+        "square": "a8",
+        "occlusion": 1.0,
+        "piece_type": "rook",
+        "color": "black"
+      }
+    }
+  ],
+  "categories": [
+    {"id": 1, "name": "white_king", "supercategory": "white"},
+    {"id": 2, "name": "white_queen", "supercategory": "white"},
+    {"id": 3, "name": "white_bishop", "supercategory": "white"},
+    {"id": 4, "name": "white_rook", "supercategory": "white"},
+    {"id": 5, "name": "white_knight", "supercategory": "white"},
+    {"id": 6, "name": "white_pawn", "supercategory": "white"},
+    {"id": 7, "name": "black_king", "supercategory": "black"},
+    {"id": 8, "name": "black_queen", "supercategory": "black"},
+    {"id": 9, "name": "black_bishop", "supercategory": "black"},
+    {"id": 10, "name": "black_rook", "supercategory": "black"},
+    {"id": 11, "name": "black_knight", "supercategory": "black"},
+    {"id": 12, "name": "black_pawn", "supercategory": "black"}
+  ]
+}

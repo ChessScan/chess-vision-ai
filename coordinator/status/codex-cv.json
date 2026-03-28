@@ -1,0 +1,11 @@
+{
+  "agent": "codex-cv",
+  "status": "ready",
+  "progress": 0,
+  "lastOutput": "Initialized, awaiting spawn",
+  "lastUpdate": "2026-03-28T16:10:00Z",
+  "blockers": ["Waiting for models from codex-train"],
+  "nextCheckpoint": "Spawn agent (deferred until models ready)",
+  "task": "Build CV pipeline: board detection → FEN",
+  "specPath": "/workspace/shared/spec/cv_agent_spec.md"
+}

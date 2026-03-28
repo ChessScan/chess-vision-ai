@@ -1,0 +1,11 @@
+{
+  "agent": "codex-train",
+  "status": "ready",
+  "progress": 0,
+  "lastOutput": "Initialized, awaiting spawn",
+  "lastUpdate": "2026-03-28T16:10:00Z",
+  "blockers": ["Waiting for training data from codex-data"],
+  "nextCheckpoint": "Spawn agent (deferred until data ready)",
+  "task": "Train YOLO + piece classifier",
+  "specPath": "/workspace/shared/spec/train_agent_spec.md"
+}

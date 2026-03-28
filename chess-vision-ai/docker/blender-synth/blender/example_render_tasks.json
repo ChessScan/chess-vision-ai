@@ -1,0 +1,80 @@
+{
+  "output_dir": "renders",
+  "render_tasks": [
+    {
+      "index": 0,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "piece_offset": {
+        "enabled": true,
+        "distribution": "normal",
+        "mean_x": 0.0,
+        "mean_y": 0.0,
+        "std_dev_x": 15.0,
+        "std_dev_y": 15.0,
+        "max_offset_percent": 45.0,
+        "clip_outliers": true
+      },
+      "camera": {
+        "radius": 18.0,
+        "elevation": 12.0,
+        "azimuth": 0.0,
+        "tilt": 2.5,
+        "roll": -1.0,
+        "fov": 18.0,
+        "position_jitter": [0.2, 0.3, 0.1],
+        "height_offset": 0.5
+      },
+      "board_model": "wooden",
+      "piece_model_set": "wooden",
+      "lighting": {
+        "preset": "indoor",
+        "intensity": 1.0,
+        "color_temperature": 5500,
+        "main_angle": 45.0,
+        "main_direction": 30.0,
+        "shadow_softness": 0.5,
+        "multiple_sources": false
+      },
+      "captured_pieces": [
+        {"type": "R", "position": [-5.0, 2.0]},
+        {"type": "n", "zone": "left", "layout": "rows"}
+      ],
+      "generate_segmentation": true,
+      "filename": "img_000000"
+    },
+    {
+      "index": 1,
+      "fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1",
+      "piece_offset": {
+        "enabled": true,
+        "distribution": "normal",
+        "mean_x": 0.0,
+        "mean_y": 0.0,
+        "std_dev_x": 20.0,
+        "std_dev_y": 20.0,
+        "max_offset_percent": 40.0,
+        "clip_outliers": true
+      },
+      "camera": {
+        "radius": 20.0,
+        "elevation": 10.0,
+        "azimuth": 30.0,
+        "tilt": 0.0,
+        "roll": 1.0,
+        "fov": 20.0,
+        "position_jitter": [0.1, 0.1, 0.05],
+        "height_offset": 0.0
+      },
+      "lighting": {
+        "preset": "outdoor_sunny",
+        "intensity": 1.2,
+        "color_temperature": 6000,
+        "main_angle": 60.0,
+        "main_direction": 45.0
+      },
+      "generate_segmentation": true,
+      "filename": "img_000001"
+    }
+  ]
+}
+

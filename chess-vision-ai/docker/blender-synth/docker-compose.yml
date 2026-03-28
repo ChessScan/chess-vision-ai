@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+  blender-synth:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: chess-vision/blender-synth:latest
+    container_name: chess-vision-blender-synth
+    volumes:
+      - ./output:/workspace/output
+      - ./tasks:/workspace/tasks
+      - ./cache:/workspace/cache
+    environment:
+      - RENDER_COUNT=100
+      - RESOLUTION=712
+      - ELEVATION_MIN=5
+      - ELEVATION_MAX=15
+      - AZIMUTH_MIN=-60
+      - AZIMUTH_MAX=60
+      - CAMERA_RADIUS=18
+    command: batch 100
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
+
+  # GPU-accelerated training container  
+  training:
+    image: chess-vision/blender-synth:latest
+    container_name: chess-vision-training
+    volumes:
+      - ./output:/data:input
+      - ./models:/models
+      - ./checkpoints:/checkpoints
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - BATCH_SIZE=16
+      - EPOCHS=100
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    profiles: ["gpu"]
+
+  # Jupyter development environment
+  jupyter:
+    image: chess-vision/cv-dev:latest
+    container_name: chess-vision-jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./output:/data
+      - ./notebooks:/notebooks
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_TOKEN=chessvision2024
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+
+networks:
+  default:
+    name: chess-vision
+
+volumes:
+  output:
+  models:
+  checkpoints:

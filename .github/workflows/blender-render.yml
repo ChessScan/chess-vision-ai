@@ -1,0 +1,30 @@
+name: Blender Chess Render
+
+on:
+  workflow_dispatch:
+    inputs:
+      count:
+        description: 'Number of renders'
+        default: '10'
+        required: true
+
+jobs:
+  render:
+    runs-on: self-hosted
+    container:
+      image: chess-vision-blender:latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Generate Renders
+        run: |
+          blender --background --python data_generation/blender_side_view_render.py -- \
+            --count ${{ github.event.inputs.count }} \
+            --output ./output/renders/ \
+            --assets ./data_generation/assets/
+      
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: chess-renders
+          path: ./output/renders/

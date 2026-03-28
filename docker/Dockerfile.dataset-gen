@@ -1,0 +1,65 @@
+FROM ubuntu:22.04
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    curl \
+    python3 \
+    python3-pip \
+    python3-venv \
+    libgl1-mesa-glx \
+    libgl1-mesa-dri \
+    libx11-6 \
+    libxi6 \
+    libxrender1 \
+    libxxf86vm1 \
+    libxfixes3 \
+    libxkbcommon0 \
+    libsm6 \
+    libice6 \
+    libopenexr-dev \
+    libopenimageio-dev \
+    libtiff-dev \
+    libjpeg-dev \
+    libpng-dev \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Blender 4.0
+RUN wget https://download.blender.org/release/Blender4.0/blender-4.0.2-linux-x64.tar.xz \
+    && tar -xf blender-4.0.2-linux-x64.tar.xz \
+    && mv blender-4.0.2-linux-x64 /opt/blender \
+    && rm blender-4.0.2-linux-x64.tar.xz \
+    && ln -s /opt/blender/blender /usr/local/bin/blender
+
+# Python dependencies
+RUN pip3 install --no-cache-dir \
+    numpy \
+    pillow \
+    opencv-python-headless \
+    bpy \
+    pyyaml \
+    tqdm \
+    imageio \
+    imageio-ffmpeg
+
+# Chess visualization
+RUN pip3 install --no-cache-dir \
+    chess \
+    matplotlib
+
+# Create workspace
+WORKDIR /workspace
+VOLUME ["/workspace/dataset", "/workspace/output"]
+
+# Chess board generation script
+COPY src/ /workspace/src/
+COPY scripts/ /workspace/scripts/
+COPY config/ /workspace/config/
+
+# Entry point
+COPY entrypoint.sh /workspace/
+RUN chmod +x /workspace/entrypoint.sh
+
+ENTRYPOINT ["/workspace/entrypoint.sh"]
+CMD ["generate"]
