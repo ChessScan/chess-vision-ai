@@ -127,8 +127,11 @@ class ChessSceneBuilder:
         if not board_path.exists():
             raise FileNotFoundError(f"Board not found: {board_path}")
         
-        # Import board
-        bpy.ops.import_scene.obj(filepath=str(board_path))
+        # Import board (Blender 5.0+ compatible)
+        try:
+            bpy.ops.wm.obj_import(filepath=str(board_path))
+        except:
+            bpy.ops.import_scene.obj(filepath=str(board_path))
         
         # Get imported object
         self.board = bpy.context.selected_objects[0]
@@ -150,8 +153,11 @@ class ChessSceneBuilder:
             print(f"Warning: Piece not found: {piece_path}")
             return None
         
-        # Import piece
-        bpy.ops.import_scene.obj(filepath=str(piece_path))
+        # Import piece (Blender 5.0+ compatible)
+        try:
+            bpy.ops.wm.obj_import(filepath=str(piece_path))
+        except:
+            bpy.ops.import_scene.obj(filepath=str(piece_path))
         piece = bpy.context.selected_objects[0]
         piece.name = f"{color}_{piece_type}_{square}"
         
