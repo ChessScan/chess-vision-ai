@@ -1,0 +1,40 @@
+{
+  "output_dir": "test_renders",
+  "render_tasks": [
+    {
+      "index": 0,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "piece_offset": {
+        "enabled": true,
+        "distribution": "normal",
+        "mean_x": 0.0,
+        "mean_y": 0.0,
+        "std_dev_x": 15.0,
+        "std_dev_y": 15.0,
+        "max_offset_percent": 45.0,
+        "clip_outliers": true
+      },
+      "camera": {
+        "radius": 18.0,
+        "elevation": 12.0,
+        "azimuth": 0.0,
+        "tilt": 0.0,
+        "roll": 0.0,
+        "fov": 18.0,
+        "position_jitter": [0.0, 0.0, 0.0],
+        "height_offset": 0.0
+      },
+      "lighting": {
+        "preset": "indoor",
+        "intensity": 1.0,
+        "color_temperature": 5500,
+        "main_angle": 45.0,
+        "main_direction": 0.0
+      },
+      "generate_segmentation": true,
+      "filename": "test_000"
+    }
+  ]
+}
+
+
