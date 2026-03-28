@@ -1,0 +1,95 @@
+piece_styles:
+  classic:
+    name: "Classic Staunton"
+    description: "Traditional tournament chess pieces"
+    color_white: [0.95, 0.95, 0.92, 1]
+    color_black: [0.1, 0.1, 0.12, 1]
+    roughness: 0.2
+    
+  modern:
+    name: "Modern Minimalist"
+    description: "Clean geometric shapes"
+    color_white: [1.0, 1.0, 1.0, 1]
+    color_black: [0.15, 0.15, 0.15, 1]
+    roughness: 0.1
+    
+  abstract:
+    name: "Abstract Geometric"
+    description: "Non-traditional forms"
+    color_white: [0.9, 0.85, 0.8, 1]
+    color_black: [0.12, 0.14, 0.16, 1]
+    roughness: 0.3
+    
+  artistic:
+    name: "Hand-drawn/Artistic"
+    description: "Organic carved wood look"
+    color_white: [0.92, 0.88, 0.82, 1]
+    color_black: [0.18, 0.16, 0.14, 1]
+    roughness: 0.4
+    subsurface: 0.05
+
+board_materials:
+  wood_oak:
+    name: "Oak Wood"
+    dark_square: [0.15, 0.08, 0.04, 1]
+    light_square: [0.8, 0.65, 0.4, 1]
+    roughness: 0.7
+    
+  wood_walnut:
+    name: "Walnut Wood"
+    dark_square: [0.12, 0.08, 0.06, 1]
+    light_square: [0.65, 0.55, 0.45, 1]
+    roughness: 0.6
+    
+  marble_white:
+    name: "White Marble"
+    dark_square: [0.3, 0.3, 0.3, 1]
+    light_square: [0.95, 0.95, 0.95, 1]
+    roughness: 0.3
+    subsurface: 0.1
+    
+  marble_black:
+    name: "Black Marble"
+    dark_square: [0.1, 0.1, 0.1, 1]
+    light_square: [0.4, 0.4, 0.4, 1]
+    roughness: 0.3
+    
+  plastic:
+    name: "Plastic Tournament"
+    dark_square: [0.15, 0.15, 0.15, 1]
+    light_square: [0.95, 0.95, 0.95, 1]
+    roughness: 0.1
+
+lighting_setups:
+  studio_even:
+    name: "Studio Even"
+    description: "Three-point professional lighting"
+    lights:
+      - name: "Key"
+        location: [5, -5, 5]
+        energy: 1000
+      - name: "Fill"
+        location: [-3, -3, 4]
+        energy: 500
+      - name: "Back"
+        location: [0, 5, 3]
+        energy: 300
+        
+  studio_dramatic:
+    name: "Studio Dramatic"
+    description: "High contrast film noir style"
+    lights:
+      - name: "Key"
+        location: [3, -3, 5]
+        energy: 1500
+      - name: "Rim"
+        location: [-2, 1, 2]
+        energy: 800
+        
+  natural:
+    name: "Natural Window Light"
+    description: "Soft directional sunlight"
+    lights:
+      - name: "Sun"
+        location: [2, -2, 8]
+        energy: 1200
